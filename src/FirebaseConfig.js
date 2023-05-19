@@ -12,11 +12,7 @@ const config = {
   measurementId: "G-T7JCG8FC8B",
 };
 
-// Use this to initialize the firebase App
-const firebaseApp = firebase.initializeApp(config);
-
-// Use these for db & auth
-const db = firebaseApp.firestore();
-const auth = firebase.auth();
-
-export { auth, db };
+if (!firebase.apps.length){
+    firebase.initializeApp(config);
+}
+export default firebase;
