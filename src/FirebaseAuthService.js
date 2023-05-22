@@ -11,7 +11,7 @@ const loginUser = (email, password) =>{
 };
 
 const logoutUser = () =>{
-    return auth.signOut;
+    return auth.signOut();
 };
 
 const sendPasswordResetEmail = (email) => {

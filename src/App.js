@@ -16,9 +16,11 @@ function App() {
   const [recipesPerPage, setRecipesPerPage] = useState(3);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    fetchRecipes()
+ //   setIsLoading(true);
+    FirebaseAuthService.subscribeToAuthChanges(setUser);
+    console.log("hello");
+    
+   fetchRecipes()
       .then((fetchedRecipes) => {
         setRecipes(fetchedRecipes);
       })
@@ -27,13 +29,13 @@ function App() {
         throw error;
       })
       .finally(() => {
-        setIsLoading(false);
-      });
+   //     setIsLoading(false);
+      }); 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, categoryFilter, orderBy, recipesPerPage]);
+  }, []);
 
-  FirebaseAuthService.subscribeToAuthChanges(setUser);
+  
 
   async function fetchRecipes(cursorId = '') {
     const queries = [];
@@ -184,10 +186,10 @@ function App() {
     }
   }
 
-  function handleEditRecipeClick(recipeId) {
-    const selectedRecipe = recipes.find((recipe) => {
-      return recipe.id === recipeId;
-    });
+  function handleEditRecipeClick(selectedRecipe) {
+    // const selectedRecipe = recipes.find((recipe) => {
+    //   return recipe.id === recipeId;
+    // });
 
     if (selectedRecipe) {
       setCurrentRecipe(selectedRecipe);
@@ -308,7 +310,7 @@ function App() {
                       {user ? (
                         <button
                           type="button"
-                          onClick={() => handleEditRecipeClick(recipe.id)}
+                          onClick={() => handleEditRecipeClick(recipe)}
                           className="primary-button edit-button"
                         >
                           EDIT
@@ -346,7 +348,10 @@ function App() {
             </div>
           </>
         ) : null}
-        {user ? (
+      </div>
+      <div>
+        {console.log("refresh")}
+      {user ? (
           <AddEditRecipeForm
             existingRecipe={currentRecipe}
             handleAddRecipe={handleAddRecipe}

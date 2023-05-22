@@ -10,18 +10,32 @@ function AddEditRecipeForm({
   handleEditRecipeCancel,
 }) {
   useEffect(() => {
-    if (existingRecipe) {
+      if (existingRecipe) {
+        console.log("changed recipe" + existingRecipe.name);
+        setRecipe(existingRecipe);
+
+        if(!existingRecipe.imageUrl)
+          existingRecipe.imageUrl ="";
+          
+        console.log("recipe set"+ existingRecipe.name + 
+        existingRecipe.category + 
+        existingRecipe.publishDate
+        + existingRecipe.ingredients + 
+        existingRecipe.imageUrl);
+
       setName(existingRecipe.name);
       setCategory(existingRecipe.category);
       setDirections(existingRecipe.directions);
-      setPublishDate(existingRecipe.publishDate.toISOString().split("T")[0]);
+      setPublishDate(existingRecipe.publishDate);
       setIngredients(existingRecipe.ingredients);
       setImageUrl(existingRecipe.imageUrl);
+
     } else {
       resetForm();
     }
   }, [existingRecipe]);
 
+  const [recipe, setRecipe] = useState(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [publishDate, setPublishDate] = useState(
@@ -104,6 +118,7 @@ function AddEditRecipeForm({
       onSubmit={handleRecipeFormSubmit}
       className="add-edit-recipe-form-container"
     >
+    
       {existingRecipe ? <h2>Update the Recipe</h2> : <h2>Add a New Recipe</h2>}
       <div className="top-form-section">
         <div className="image-input-box">
