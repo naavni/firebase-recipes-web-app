@@ -1,4 +1,4 @@
-# Getting Started with React App for Firebase
+# Getting Started with React App for Firebase db
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
